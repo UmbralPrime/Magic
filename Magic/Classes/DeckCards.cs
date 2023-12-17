@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Magic.Classes
 {
-    class DeckCards
+    public class DeckCards
     {
         [Key]
         public int Id { get; set; }

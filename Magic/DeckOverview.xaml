@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Magic.DeckOverview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Magic"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:domain="clr-namespace:Magic.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <domain:DeckListViewModel />
+    </UserControl.DataContext>
+    <Grid>
+        <ListView Name="DecksListView" ItemsSource="{Binding Decks}" SelectedItem="{Binding SelectedDeck}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Deck name" Width="200" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Deck size" Width="120" DisplayMemberBinding="{Binding Cards.Count}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Orientation="Horizontal">
+            <Button
+Grid.Column="2"
+Width="50"
+HorizontalAlignment="Right"
+Background="#FF181D24"
+BorderBrush="#FF00695C"
+Foreground="#FF00695C"
+        Margin="10"
+Content="{materialDesign:PackIcon Kind=Trash,
+                                  Size=22}"
+Style="{StaticResource MaterialDesignOutlinedSecondaryLightButton}" Click="deleteSelectedDeck" />
+            <Button
+Grid.Column="2"
+Width="50"
+HorizontalAlignment="Right"
+Background="#FF181D24"
+BorderBrush="#FF00695C"
+Foreground="#FF00695C"
+        Margin="10"
+Content="{materialDesign:PackIcon Kind=ReadMore,
+                                  Size=22}"
+Style="{StaticResource MaterialDesignOutlinedSecondaryLightButton}" Click="openCardWindow"  />
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

@@ -37,6 +37,10 @@ namespace Magic
                     DeckBuilder deckBuilder = new DeckBuilder();
                     ContentWindow.Content = deckBuilder;
                     break;
+                case "tabCollection":
+                    DeckOverview deckOverview = new DeckOverview();
+                    ContentWindow.Content = deckOverview;
+                    break;
                 default:
                     break;
             }

@@ -6,17 +6,8 @@ using MtgApiManager.Lib.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Magic
 {
@@ -136,12 +127,26 @@ namespace Magic
                 using (MagicDataContext db = new MagicDataContext())
                 {
                     vm.Deck.Name = vm.DeckName;
-                    vm.Deck.Id = Guid.NewGuid().ToString();                    
-                    db.DeckCards.AddRange(vm.Deck.Cards.Select(x => new DeckCards { DeckId = vm.Deck.Id, CardId = x.Id }));
-                    vm.Deck.Cards.Clear();
+                    vm.Deck.Id = Guid.NewGuid().ToString();
                     db.Decks.Add(vm.Deck);
                     db.SaveChanges();
+                    foreach (Card card in vm.Deck.Cards)
+                    {
+                        vm.Deck.DeckCards.Add(new DeckCards { DeckId = vm.Deck.Id, CardId = card.Id });
+                        if(db.Cards.Any(x => x.Id == card.Id))
+                        {
+                            continue;
+                        }
+                        db.Cards.Add(card);
+                    }
+                    foreach(DeckCards deckCard in vm.Deck.DeckCards)
+                    {
+                        db.DeckCards.Add(deckCard);
+                    }
+                    db.SaveChanges();
+
                 }
+                vm.Deck.Cards.Clear();
             }
 
         }
